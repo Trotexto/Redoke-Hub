@@ -1,0 +1,93 @@
+-- Redoke Hub
+-- Roblox Script with Rayfield UI
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local Window = Rayfield:CreateWindow({
+   Name = "Redoke Hub",
+   LoadingTitle = "Redoke Hub Loading",
+   LoadingSubtitle = "by Redoke",
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = "RedokeHub",
+      FileName = "RedokeConfig"
+   },
+   Discord = {
+      Enabled = false,
+      Invite = "noinvitelink",
+      RememberJoins = true
+   },
+   KeySystem = false,
+   KeySettings = {
+      Title = "Redoke Hub",
+      Subtitle = "Key System",
+      Note = "No key required",
+      FileName = "RedokeKey",
+      SaveKey = true,
+      GrabKeyFromSite = false,
+      Key = {"Hello"}
+   }
+})
+
+-- Main Tab
+local MainTab = Window:CreateTab("Main", 4483362458)
+
+-- Pet Spawner Section
+local PetSection = MainTab:CreateSection("Pet Spawner")
+
+-- Pet Spawner Button
+local PetSpawnerButton = MainTab:CreateButton({
+   Name = "Pet Spawner",
+   Callback = function()
+      -- Execute the pet spawner script
+      local success, err = pcall(function()
+         local Spawner = loadstring(game:HttpGet("https://gitlab.com/darkiedarkie/dark/-/raw/main/Spawner.lua"))()
+         Spawner.Load()
+      end)
+      
+      if success then
+         Rayfield:Notify({
+            Title = "Pet Spawner",
+            Content = "Pet Spawner loaded successfully!",
+            Duration = 3,
+            Image = 4483362458,
+            Actions = {}
+         })
+      else
+         Rayfield:Notify({
+            Title = "Pet Spawner Error",
+            Content = "Failed to load Pet Spawner: " .. tostring(err),
+            Duration = 5,
+            Image = 4483362458,
+            Actions = {}
+         })
+      end
+   end,
+})
+
+-- Additional Tabs (you can expand these)
+local SettingsTab = Window:CreateTab("Settings", 4483362458)
+
+local SettingsSection = SettingsTab:CreateSection("Configuration")
+
+-- UI Toggle
+local UIToggle = SettingsTab:CreateKeybind({
+   Name = "Toggle UI",
+   CurrentKeybind = "RightControl",
+   HoldToInteract = false,
+   Flag = "UIToggle",
+   Callback = function(Keybind)
+      -- Toggle UI visibility
+   end,
+})
+
+-- Credits Tab
+local CreditsTab = Window:CreateTab("Credits", 4483362458)
+
+local CreditsSection = CreditsTab:CreateSection("Made by")
+
+local CreditsLabel = CreditsTab:CreateLabel("Redoke Hub v1.0")
+local CreatorLabel = CreditsTab:CreateLabel("Created with Rayfield UI Library")
+
+-- Initialize the UI
+Rayfield:LoadConfiguration()
