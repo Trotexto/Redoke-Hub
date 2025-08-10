@@ -65,29 +65,34 @@ local PetSpawnerButton = MainTab:CreateButton({
    end,
 })
 
--- Additional Tabs (you can expand these)
-local SettingsTab = Window:CreateTab("Settings", 4483362458)
-
-local SettingsSection = SettingsTab:CreateSection("Configuration")
-
--- UI Toggle
-local UIToggle = SettingsTab:CreateKeybind({
-   Name = "Toggle UI",
-   CurrentKeybind = "RightControl",
-   HoldToInteract = false,
-   Flag = "UIToggle",
-   Callback = function(Keybind)
-      -- Toggle UI visibility
+-- Egg Randomizer Button
+local EggRandomizerButton = MainTab:CreateButton({
+   Name = "Egg Randomizer",
+   Callback = function()
+      -- Execute the egg randomizer script
+      local success, err = pcall(function()
+         loadstring(game:HttpGet("https://raw.githubusercontent.com/Kenri-rec/Grow-A-Garden-Script/refs/heads/main/Egg-Randomizer"))()
+      end)
+      
+      if success then
+         Rayfield:Notify({
+            Title = "Egg Randomizer",
+            Content = "Egg Randomizer loaded successfully!",
+            Duration = 3,
+            Image = 4483362458,
+            Actions = {}
+         })
+      else
+         Rayfield:Notify({
+            Title = "Egg Randomizer Error",
+            Content = "Failed to load Egg Randomizer: " .. tostring(err),
+            Duration = 5,
+            Image = 4483362458,
+            Actions = {}
+         })
+      end
    end,
 })
-
--- Credits Tab
-local CreditsTab = Window:CreateTab("Credits", 4483362458)
-
-local CreditsSection = CreditsTab:CreateSection("Made by")
-
-local CreditsLabel = CreditsTab:CreateLabel("Redoke Hub v1.0")
-local CreatorLabel = CreditsTab:CreateLabel("Created with Rayfield UI Library")
 
 -- Initialize the UI
 Rayfield:LoadConfiguration()
